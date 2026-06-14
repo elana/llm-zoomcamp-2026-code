@@ -2,17 +2,6 @@ from rag_helper import RAGBase
 
 class RAGHomework1(RAGBase):
 
-    def search1(self, query, num_results=5):
-        boost_dict = {"content": 1.0}
-        filter_dict = {}  # no course filter needed here
-
-        return self.index.search(
-            query,
-            num_results=num_results,
-            boost_dict=boost_dict,
-            filter_dict=filter_dict
-        )
-
     def search(self, query: str) -> dict[str, str]:
         """
         Search the chuncked github md files using the index and return the top 5 results as a list of dicts with keys "filename" and "content".
@@ -35,6 +24,7 @@ class RAGHomework1(RAGBase):
 
         return "\n".join(lines).strip()
     
+    #returnst the entire response and not just the output text, which we need for the homework
     def llm_full_response(self, prompt):
         input_messages = [
             {"role": "developer", "content": self.instructions},
@@ -48,6 +38,7 @@ class RAGHomework1(RAGBase):
 
         return response
     
+    #returns the entire response, not just the output text
     def rag(self, query):
         search_results = self.search(query)
         prompt = self.build_prompt(query, search_results)
