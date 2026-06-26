@@ -17,8 +17,6 @@ def load_faq_data():
 
         documents.extend(course_data)
 
-    for doc in documents:
-        doc["doc_id"] = doc.pop("id")
 
     return documents
 
